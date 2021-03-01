@@ -3,6 +3,9 @@ import { ViewPlugin } from '@remixproject/engine-web'
 import * as packageJson from '../../../../../package.json'
 import publishToStorage from '../../publishToStorage'
 import { compile } from '../compiler/compiler-helpers'
+import React from 'react' // eslint-disable-line
+import ReactDOM from 'react-dom'
+import { SolidityCompiler } from '@remix-ui/solidity-compiler'
 
 const EventEmitter = require('events')
 const $ = require('jquery')
@@ -65,7 +68,11 @@ class CompileTab extends ViewPlugin {
       eventHandlers: {},
       loading: false
     }
-    this.compileTabLogic = new CompileTabLogic(this.queryParams, this.fileManager, this.editor, this.config, this.fileProvider, this.contentImport)
+    this.el = yo`
+      <div id="compileTabWrapper">
+      </div>
+    `
+    this.renderComponent()
   }
 
   onActivationInternal () {
@@ -478,19 +485,33 @@ class CompileTab extends ViewPlugin {
   }
 
   render () {
-    if (this._view.el) return this._view.el
-    this.onActivationInternal()
-    this._view.errorContainer = yo`<div class="${css.errorBlobs} p-4" data-id="compiledErrors" ></div>`
-    this._view.contractSelection = this.contractSelection()
-    this._view.compilerContainer = this.compilerContainer.render()
-    this.compilerContainer.activate()
-    this._view.el = yo`
-      <div id="compileTabView">
-        ${this._view.compilerContainer}
-        ${this._view.contractSelection}
-        ${this._view.errorContainer}
-      </div>`
-    return this._view.el
+    // if (this._view.el) return this._view.el
+    // this.onActivationInternal()
+    // this._view.errorContainer = yo`<div class="${css.errorBlobs} p-4" data-id="compiledErrors" ></div>`
+    // this._view.contractSelection = this.contractSelection()
+    // this._view.compilerContainer = this.compilerContainer.render()
+    // this.compilerContainer.activate()
+    // this._view.el = yo`
+    //   <div id="compileTabView">
+    //     ${this._view.compilerContainer}
+    //     ${this._view.contractSelection}
+    //     ${this._view.errorContainer}
+    //   </div>`
+    return this.el
+  }
+
+  renderComponent () {
+    ReactDOM.render(
+      <SolidityCompiler
+        editor={this.editor}
+        config={this.config}
+        fileProvider={this.fileProvider}
+        fileManager={this.fileManager}
+        contentImport={this.contentImport}
+        queryParams={this.queryParams}
+        plugin={this}
+      />
+      , this.el)
   }
 
   onActivation () {
