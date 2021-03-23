@@ -68,10 +68,8 @@ class CompileTab extends ViewPlugin {
       eventHandlers: {},
       loading: false
     }
-    this.el = yo`
-      <div id="compileTabWrapper">
-      </div>
-    `
+    this.el = document.createElement('div')
+    this.el.setAttribute('id', 'compileTabWrapper')
     this.renderComponent()
   }
 
