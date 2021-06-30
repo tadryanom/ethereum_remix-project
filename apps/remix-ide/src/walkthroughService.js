@@ -31,7 +31,6 @@ export class WalkthroughService {
         }
         ]
       }).onafterchange((targetElement) => {
-        console.log(targetElement)
         const header = document.getElementsByClassName('introjs-tooltip-header')[0]
         if (header) {
           header.classList.add('d-flex')
@@ -43,6 +42,7 @@ export class WalkthroughService {
         if (skipbutton) {
           skipbutton.classList.add('ml-3')
           skipbutton.classList.add('text-decoration-none')
+          skipbutton.id = 'remixTourSkipbtn'
         }
       }).start()
       localStorage.setItem('hadTour_initial', true)
