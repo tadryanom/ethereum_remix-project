@@ -18,7 +18,7 @@ export class WalkthroughService {
         {
           element: document.querySelector('#compileIcons'),
           title: 'Solidity Compiler',
-          intro: 'Having selected a .sol file in the File Explorers(the icon above), compile it with the Solidity Compiler.',
+          intro: 'Having selected a .sol file in the File Explorers (the icon above), compile it with the Solidity Compiler.',
           tooltipClass: 'bg-light text-dark',
           position: 'right'
         },
